@@ -67,13 +67,13 @@ To make the installation and setup for you locally as easy as possible, this cod
 
 5. In Lucee Admin, in `Extensions -> Applications` install the H2 extension, version 2.1.214
 
-![H2](images/3.png)
+	![H2](images/3.png)
 
 6. In Lucee Admin verify that you have a datasource `pokemon`. 
 
-![DS](images/4.png)
+	![DS](images/4.png)
 
-![DS](images/5.png)
+	![DS](images/5.png)
 
 	If you don't or if the datasource doesn't verify, it means that your CFConfig installation is not correct.
 
