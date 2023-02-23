@@ -30,7 +30,7 @@ To make the installation and setup for you locally as easy as possible, this cod
 
 2. Make sure to install CFConfig in CommandBox: https://cfconfig.ortusbooks.com/using-the-cli/installation
 
-3. Fork this repository into your own Github account, clone a local copy to your system. The go to the root directory of your lcoal clone and run:
+3. Fork this repository into your own Github account, clone a local copy to your system. The go to the root directory of your local clone and run:
 
     ```
 	box
