@@ -1,8 +1,8 @@
 # Pokemon adventure
 
-Welcome! Cupid Media's CFML homework assigned is meant to be an approximation of work at the company when working on new products. The sample application and the task might be a bit contrived, but the concepts are things that you may deal with on a day-to-day basis in our team.
+Welcome! Cupid Media's CFML homework assignment is meant to be an approximation of work at the company when working on new products. The sample application and the task might be a bit contrived, but the concepts are things that you may deal with on a day-to-day basis in our team.
 
-We respect your time and we know that going through hiring processes can be time-consuming and stressful, so we request that you don't spend much more time than a few hours completing the assignment (excluding setup). If you finish faster, great! If you get part of the way through, that's no problem either. 
+We respect your time and we know that going through hiring processes can be time-consuming and stressful, so we request that you don't spend much more time than a three to four hours completing the assignment (excluding setup). If you finish faster, great! If you get part of the way through, that's no problem either. 
 
 Please treat the work as if it was a real task though. You will have the opportunity to explain decisions you've made based on these constraints when you create your Pull Request on Github.
 
@@ -30,7 +30,15 @@ To make the installation and setup for you locally as easy as possible, this cod
 
 2. Make sure to install CFConfig in CommandBox: https://cfconfig.ortusbooks.com/using-the-cli/installation
 
-3. Fork this repository into your own Github account, clone a local copy to your system and while being in in Commandbox in the root directory of this repository on your system, run:
+3. Fork this repository into your own Github account, clone a local copy to your system. The go to the root directory of your lcoal clone and run:
+
+    ```
+	box
+	```
+    
+	This will start CommandBox.
+
+4. While being in  CommandBx in the root directory of this repository on your system, run:
 
 	```
 	install
@@ -38,7 +46,7 @@ To make the installation and setup for you locally as easy as possible, this cod
 
 	This will setup all the needed dependencies for the application. 
 
-4. Then start the server by running:
+5. Then start the server by running:
 
 	```
 	server start
@@ -63,23 +71,37 @@ To make the installation and setup for you locally as easy as possible, this cod
 
 	Lucee Admin will be available on `http://127.0.0.1:<port>/lucee/admin/server.cfm` and the pre-set password is `test1234`.
 
-	CommandBox assigns a random port to your server - but you can customise the port and many other settings as described here: https://commandbox.ortusbooks.com/embedded-server/server.json
+	CommandBox assigns a random (high) port to your server - but you can customise the port and many other settings as described here: https://commandbox.ortusbooks.com/embedded-server/server.json
 
-5. In Lucee Admin, in `Extensions -> Applications` install the H2 extension, version 2.1.214
+	Additionally, you can find out what default port CommandBox has assigned to your server by running:
+
+	```
+	server list
+	```
+
+6. In Lucee Admin, in `Extensions -> Applications` install the H2 extension, version 2.1.214
+
+    ![H2](images/6.png)
 
 	![H2](images/3.png)
 
-6. In Lucee Admin verify that you have a datasource `pokemon`. 
+7. In Lucee Admin verify that you have a datasource `pokemon`. 
 
 	![DS](images/4.png)
 
 	![DS](images/5.png)
 
-	If you don't or if the datasource doesn't verify, it means that your CFConfig installation is not correct.
+	If you don't, it means that your CFConfig installation is not correct.
 
-	CFConfig will try to load `.cfconfig.json` into your Lucee server when it starts. It uses `DB_DATABASE_PATH` from `.env` to point to the physical H2 database file's directory and you will have to configure the path so that it matches your local environment (URL encoded as outlined in `.env`).
+	CFConfig will try to load `.cfconfig.json` into your Lucee server when it starts. It uses the`DB_DATABASE_PATH` variable from `.env`. This variable has to point to the physical H2 database file's directory and you will have to configure the path so that it matches your local environment 
+	
+	The path has to be URL encoded as outlined in `.env`. An easy way to achieve this is something like: 
 
-	Note: you will have to stop and restart your server after changed to `.env` for them to be picked up.
+	```
+	writeDump(encodeForURL("/Users/something/Documents/Dev/cfdev-task-clean/database/"));
+	```
+
+	*Note*: you will have to `stop` and `start` or `restart` your server in CommandBox after having changed `.env` for the changes to be picked up.
 
 ## The application
 
@@ -93,7 +115,7 @@ You can safely ignore all the other existing endpoints in the application - feel
 
 ### Intended functionality
 
-When the API endpoint is called with a valid `pokemonId`, the code should go to the PokeAPI (see above), request information about the Pokemon (namely Name, URL, height and - if avaible - all items it can hold).
+When the API endpoint is called with a valid `pokemonId`, the code should go to the PokeAPI (see above), request information about the Pokemon (namely Name, URL, height and - if avaible - all items it can hold. Not all Pokemon can hold items and that difference need to be catered for properly).
 
 This information should then be locally inserted into two related H2 DB tables:
 
@@ -105,7 +127,7 @@ When a pokemon is requested again, existing records for that Pokemon in the loca
 
 ### Existing code
 
-The existing code is in a *terrible* state. It was written about 20 years ago and is simply a single `.cfm` template that is being included from the handler. 
+The existing code that is called from the Handler in a *terrible* state. It was written about 20 years ago and is simply a single `.cfm` template that is being included from the handler. 
 
 It's *mostly* functional (but there seems to be a problem with handling of the repeat calls we mentioned above), but it's written in CFML tags, everything is lumped into one file and the developer(s) didn't stick to any sensible naming conventions.
 
@@ -119,27 +141,36 @@ Before you start, we would like to ask you to keep a few things in mind:
 
 - After you're done with your changes, we should be able to run the application and it should not error.
 - Do not make any changes to the version of Lucee or any other dependencies .
-- Do not refactor or restructure any code that is not directly related to your assigned.
-- It's up to you if you want to include additional 3rd-party libraries for certain parts of your refactorings. However, if you do so, they need to become part of the regular CommandBox package management of the application.
+- Do not refactor or restructure any code that is not directly related to your assignment.
+- It's fine if you want to include additional 3rd-party libraries for certain parts of your refactorings. However, if you do so, they need to become part of the regular CommandBox package management of the application. 
 - It's up to you how you want to manage flows in commits and branches locally. But - the end result has to be a single Pull Request from your forked repository on Github against our repository on Github.
 
 ## Your assignment
 
-You've been given the task to refactor the Pokemon endpoint of the application into modern CFML. The general expectations are:
+You've been given the task to refactor the Pokemon endpoint of the application into modern CFML. 
+
+The general expectations are:
 
 - The code consists of script-based components. If you want to use Lucee `tag islands` for query-based code inside a script component, that's cool though. No one should ever be forced to write SQL in CFScript :-)
 - You follow good practices for a separation between the handler, service/business logic and Data Access Objects (DAO) in the model directory's `com.cupidmedia.pokemon` package. 
-- Your endpoint code is ideally written in a flexible and testable way with unit and integration tests.
+- Your endpoint code is ideally written in a flexible and testable way with unit and integration tests provided in your Pull Request
 
 If you are having trouble starting, here are a few examples of what we will be looking for in the PR:
 
 - Solid abstraction of 3rd party APIs used
 - Good validation of input data 
+- Good and consistent naming practices
 - Usage of object-oriented design and patterns
 - Test coverage of the new/refactored code you've written with unit and integration test
-- Following not only the happy path but also deal with validation and exceptions and handle them appropriately
-- Already known issues (remember the comment about the repeated calls? And the validation issues? Yup, all that...) should be addressed appropriately somehow.
-- Display of good GitHub hygeniene - please avoid thing like "temp commit 1" etc - each changeset should have a clear purpose and boundary
+- Following not only the happy path but also deal with validation and exceptions and handle them appropriately.
+- Making good choices in using 3rd-party libraries (if and where appropriate).
+- Already known issues (remember the comment about the repeated calls and updating DB data? And the validation issues? Yup, all that...) should be addressed appropriately somehow.
+- Display of good GitHub hygeniene - avoid things like "temp commit 1" etc - each changeset in your Pull Request should have a clear purpose and boundary
+
+Bonus points for doing things like:
+
+- Using a linter and code formatter before you Pull Request
+- Using a security checking tool before you Pull Request
 
 ### Submitting your assignment
 
@@ -147,7 +178,9 @@ Once you've finished, push your changes to your repository on Github and create 
 
 Write a description of your code changes, including any decisions or trade-offs you made. If you end up introducing nerw libraries please point that out, telling us what those are and why you had to add them.
 
-Since a few hours is not a lot of time, include anything you would have done or changed, given more time.
+Since a few hours is not a lot of time, include anything you would have done or changed if you had had more time.
+
+Please treat the Pull Request as if you were to submit a real-world pull request. Be verbose and explain your changes and the reasons for making them in a clear and succint way.
 
 We also welcome any comments or suggestions you may have to improve the assignment. Giving and receiving feedback are very important skills for us.
 
