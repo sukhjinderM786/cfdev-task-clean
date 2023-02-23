@@ -115,7 +115,7 @@ You can safely ignore all the other existing endpoints in the application - feel
 
 ### Intended functionality
 
-When the API endpoint is called with a valid `pokemonId`, the code should go to the PokeAPI (see above), request information about the Pokemon (namely Name, URL, height and - if avaible - all items it can hold. Not all Pokemon can hold items and that difference need to be catered for properly).
+When the API endpoint is called with a valid `pokemonId`, the code should go to the PokeAPI (see above), request information about the Pokemon (namely Name, URL, height and - if avaible - all items it can hold. Not all Pokemon can hold items and that difference needs to be catered for properly).
 
 This information should then be locally inserted into two related H2 DB tables:
 
@@ -127,13 +127,13 @@ When a pokemon is requested again, existing records for that Pokemon in the loca
 
 ### Existing code
 
-The existing code that is called from the Handler in a *terrible* state. It was written about 20 years ago and is simply a single `.cfm` template that is being included from the handler. 
+The existing code that is called from the Handler is in a *terrible* state. It was written about 20 years ago and is simply a single `.cfm` template that is being included from the handler. 
 
 It's *mostly* functional (but there seems to be a problem with handling of the repeat calls we mentioned above), but it's written in CFML tags, everything is lumped into one file and the developer(s) didn't stick to any sensible naming conventions.
 
-There's also a few things weird with regards to what the endpoint returns. It seems to be a sentence and always with status code 200. Maybe that should be looked at too and be more API-ified. The validation seems to have some weaknesses as well.
+There are also a few things behaving weird with regards to what the endpoint returns. It seems to be a sentence and always with status code 200. Maybe that should be looked at, too, and be more API-ified. The validation seems to have some weaknesses as well, letting through unwanted data inputs.
 
-The application already has unit and integration tests in `/test` that can be executed with `http://127.0.0.1:<port>/tests/runner.cfm`
+The application already has unit and integration tests for other endpoints in `/test` that can be executed with `http://127.0.0.1:<port>/tests/runner.cfm`
 
 ## A few notes
 
@@ -152,7 +152,7 @@ You've been given the task to refactor the Pokemon endpoint of the application i
 The general expectations are:
 
 - The code consists of script-based components. If you want to use Lucee `tag islands` for query-based code inside a script component, that's cool though. No one should ever be forced to write SQL in CFScript :-)
-- You follow good practices for a separation between the handler, service/business logic and Data Access Objects (DAO) in the model directory's `com.cupidmedia.pokemon` package. 
+- You follow good practices for a separation between the handler, service/business logic and Data Access Objects (DAO) in the `/model` directory's `com.cupidmedia.pokemon` package. 
 - Your endpoint code is ideally written in a flexible and testable way with unit and integration tests provided in your Pull Request
 
 If you are having trouble starting, here are a few examples of what we will be looking for in the PR:
@@ -163,7 +163,6 @@ If you are having trouble starting, here are a few examples of what we will be l
 - Usage of object-oriented design and patterns
 - Test coverage of the new/refactored code you've written with unit and integration test
 - Following not only the happy path but also deal with validation and exceptions and handle them appropriately.
-- Making good choices in using 3rd-party libraries (if and where appropriate).
 - Already known issues (remember the comment about the repeated calls and updating DB data? And the validation issues? Yup, all that...) should be addressed appropriately somehow.
 - Display of good GitHub hygeniene - avoid things like "temp commit 1" etc - each changeset in your Pull Request should have a clear purpose and boundary
 
@@ -171,6 +170,7 @@ Bonus points for doing things like:
 
 - Using a linter and code formatter before you Pull Request
 - Using a security checking tool before you Pull Request
+- Making good choices in using 3rd-party libraries (if and where appropriate).
 
 ### Submitting your assignment
 
