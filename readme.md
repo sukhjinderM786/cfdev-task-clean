@@ -2,7 +2,7 @@
 
 Welcome! Cupid Media's CFML homework assignment is meant to be an approximation of work at the company when working on new products. The sample application and the task might be a bit contrived, but the concepts are things that you may deal with on a day-to-day basis in our team.
 
-We respect your time and we know that going through hiring processes can be time-consuming and stressful, so we request that you don't spend much more time than a three to four hours completing the assignment (excluding setup). If you finish faster, great! If you get part of the way through, that's no problem either. 
+We respect your time and we know that going through a hiring process can be time-consuming and stressful, so we request that you don't spend much more time than three to four hours completing the assignment (excluding setup). If you finish faster, great! If you get part of the way through, that's no problem either. 
 
 Please treat the work as if it was a real task though. You will have the opportunity to explain decisions you've made based on these constraints when you create your Pull Request on Github.
 
