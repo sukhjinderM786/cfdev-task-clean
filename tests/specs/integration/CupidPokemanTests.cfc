@@ -65,6 +65,8 @@ component
 				var event    = execute( route = "CupidPokemon/getAPokemon" );
 				var response = event.getPrivateValue( "response" );
 				
+				//debug( response.getData() );
+
 			} );
 
 			

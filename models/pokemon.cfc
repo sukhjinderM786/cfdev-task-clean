@@ -12,12 +12,12 @@ component output="false" displayname="pokemon" accessors="true" {
 	************************************* API Methods **************************************
 	***************************************************************************************/
 
-	public function init(){
+	function init(){
 		
 		return this;
 	}
 
-	public struct function httpRequest(
+	struct function httpRequest(
 		numeric pokemonId = 1
 	) {
 		// Do HTTP request and handle return of struct
@@ -62,8 +62,8 @@ component output="false" displayname="pokemon" accessors="true" {
 							}
 						}
 
-						local.sql.setsql = 'INSERT INTO POKEMON (ID, SPECIES, URL, HEIGHT) values (:id, :species, :url, :height)';
-						local.sql.options = { datasource: "pokemon", result: "local.sql.insertResult1" };
+						local.sql.setsql = 'INSERT INTO CUPIDMEDIA_POKEMON.POKEMON (ID, SPECIES, URL, HEIGHT) values (:id, :species, :url, :height)';
+						local.sql.options = { datasource: "pokemon", result: "local.sql.insertPokemon" };
 
 						local.sql.param = {};
 			  			local.sql.param[ "ID" ] = { value: local.jsonResult.id, sqltype: "integer" };
@@ -77,7 +77,7 @@ component output="false" displayname="pokemon" accessors="true" {
 			  			if(ArrayLen(local.jsonResult.held_items)) {
 			  				
 			  				
-			  				local.sql.options = { datasource: "pokemon", result: "local.sql.insertResult2" };
+			  				local.sql.options = { datasource: "pokemon", result: "local.sql.insertItem" };
 			  				local.sql.params = {};
 							local.sql.values = [];
 
@@ -94,7 +94,7 @@ component output="false" displayname="pokemon" accessors="true" {
 			  					//local.sql.result = queryExecute( local.sql.setsql, local.sql.param, local.sql.options );
 							}
 
-							local.sql.setsql = 'INSERT INTO ITEM (POKEMONID, [NAME], URL) values #local.sql.values.ToList()#;';
+							local.sql.setsql = 'INSERT INTO CUPIDMEDIA_POKEMON.ITEM (POKEMONID, [NAME], URL) values #local.sql.values.ToList()#;';
 
 							local.sql.result = queryExecute( local.sql.setsql, local.sql.params, local.sql.options );
 							
@@ -103,7 +103,7 @@ component output="false" displayname="pokemon" accessors="true" {
 					}
 					catch (any excp) {
 				    	transactionRollback();
-				    	WriteDump(excp);
+				    	
 				    	cfsavecontent( variable="local.excepresponse" ) {
 							WriteDump(var=#excp#);
 						}
