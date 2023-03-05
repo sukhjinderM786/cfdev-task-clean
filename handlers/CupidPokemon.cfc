@@ -24,7 +24,7 @@ component extends="coldbox.system.RestHandler" {
 		//include "/models/pokemon.cfm";
 		local = {};
 		local.response = new pokemon().httpRequest(rc.pokemonId);
-		event.getResponse().setData( local.response );
+		event.getResponse().setData( { "apiRespData" : local.response } );
 	}
 
 }
