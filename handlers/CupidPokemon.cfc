@@ -3,6 +3,9 @@
  */
 component extends="coldbox.system.RestHandler" {
 
+	// Injection
+	//property name="pokemonService" inject="models.pokemonService";
+
 	// OPTIONAL HANDLER PROPERTIES
 	this.prehandler_only      = "";
 	this.prehandler_except    = "";
@@ -13,6 +16,7 @@ component extends="coldbox.system.RestHandler" {
 
 	// REST Allowed HTTP Methods Ex: this.allowedMethods = {delete='POST,DELETE',index='GET'}
 	this.allowedMethods = {};
+	
 
 	/**
 	 * Retrieve and store a Pokemon
@@ -23,7 +27,9 @@ component extends="coldbox.system.RestHandler" {
 
 		//include "/models/pokemon.cfm";
 		local = {};
-		local.response = new pokemon().httpRequest(rc.pokemonId);
+		local.pokemonObj = CreateObject("component", "models.pokemonService").init();
+		local.response = local.pokemonObj.httpRequest(rc.pokemonId)
+		
 		event.getResponse().setData( { "apiRespData" : local.response } );
 	}
 
